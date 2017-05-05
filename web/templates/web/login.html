@@ -1,8 +1,23 @@
 {% extends "web/base.html" %}
 {% block subtitle %}Login{% endblock %}
 
-{% block panel_name %}Login with your username and password{% endblock %}
+{% block panel_name %}
+    {% if error_message %}
+        {{ error_message }}
+
+    {% else %}
+        Login with your username and password
+    {% endif %}
+{% endblock %}
 
 {% block content %}
-
+    <form method="post" action="/login/">
+        <label for="username">Username</label>
+        <input name="username" type="text" id="username">
+        <label for="password">Password</label>
+        <input name="password" type="password" id="password">
+        {% csrf_token %}
+        <br/>
+        <input type="submit" value="Login" class="button button-primary">
+    </form>
 {% endblock %}
