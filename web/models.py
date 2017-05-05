@@ -9,8 +9,18 @@ class Contribution(models.Model):
     approved = models.BooleanField(default=False)
     date_approved = models.DateTimeField(null=True)
 
+    class Meta:
+        ordering = ("-date_paid",)
+
 
 class ConfirmationRequest(models.Model):
     contribution = models.ForeignKey(Contribution)
     approved = models.BooleanField(default=False)
     date_requested = models.DateTimeField(auto_now_add=True)
+    merchant = models.CharField(blank=True, max_length=255)
+    reference = models.CharField(blank=True, max_length=100)
+
+
+class Admin(models.Model):
+    member = models.ForeignKey(User)
+    is_admin = models.BooleanField(default=False)

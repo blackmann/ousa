@@ -4,7 +4,11 @@
 {% block panel_name %}Admin Panel{% endblock %}
 
 {% block content %}
-    <h3><a href="check_account.html">Check Account</a></h3>
-    <h3><a href="check_account.html">Confirmations</a></h3>
-    <p>5 requests need approval</p>
+    {% if not_authorized %}
+        <p style="color: crimson">You are not allowed to do anything here.</p>
+    {% else %}
+        <h3><a href="{% url "accounts" %}">Check Account</a></h3>
+        <h3><a href="{% url "confirmations" %}">Confirmations</a></h3>
+    {% endif %}
+
 {% endblock %}

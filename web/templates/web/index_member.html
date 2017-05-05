@@ -5,5 +5,31 @@
 {% block panel_name %}Membership Panel{% endblock %}
 
 {% block content %}
-    <button class="button uk-button-primary">Request Confirmation</button>
+    <h3>Your contributions</h3>
+    <table>
+        <tr>
+            <th>Date paid</th>
+            <th>Amount</th>
+            <th>Approved</th>
+            <th>Action</th>
+        </tr>
+        {% if contributions %}
+            {% for contribution in contributions %}
+                <tr>
+                    <td>{{ contribution.date_paid }}</td>
+                    <td>{{ contribution.amount }}</td>
+                    <td>{{ contribution.approved }}</td>
+                    <td>{% if not contribution.approved %}
+                        <a href="{% url "delete_request" contribution.id %}">Delete</a>
+                    {% endif %}</td>
+                </tr>
+            {% endfor %}
+
+        {% else %}
+            <p>You haven't made any contributions yet.</p>
+        {% endif %}
+    </table>
+
+    <p>Your total approved payment is: {{ total_contributions }}</p>
+    <a class="button uk-button-primary" href="{% url "request_confirmation" %}">Request Confirmation</a>
 {% endblock %}

@@ -31,6 +31,9 @@
     <div class="row">
       <div class="one-half column" style="margin-top: 4em">
         <h4>Universal Old Students Association 2010</h4>
+          {% if user.is_authenticated %}
+              <p> {{ user.get_full_name }} (<a href="{% url "logout" %}">Logout</a>) </p>
+          {% endif %}
         <p>{% block panel_name %}{% endblock %}</p>
       </div>
     </div>

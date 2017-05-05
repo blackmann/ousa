@@ -4,5 +4,22 @@
 {% block panel_name %}Fill in the form below with your payment details{% endblock %}
 
 {% block content %}
+    {% if error_message %}
+        <p style="color: #C65C44">{{ error_message }}</p>
+    {% endif %}
+    <form method="post" action="{% url "request_confirmation" %}">
+        <label for="amount">Amount</label>
+        <input id="amount" type="number" name="amount">
 
+        <br/><em>If the payment was made with your own account, you can skip this.</em>
+        <label for="merchant">Merchant Name</label>
+        <input name="merchant" type="text" id="merchant">
+
+        <label for="reference">Payment Reference <em>(not required)</em></label>
+        <input name="reference" id="reference" type="text">
+
+        {% csrf_token %}
+
+        <br/><input type="submit" value="Submit" class="button button-primary">
+    </form>
 {% endblock %}

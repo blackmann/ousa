@@ -4,5 +4,25 @@
 {% block panel_name %}Approve Payment Confirmations{% endblock %}
 
 {% block content %}
-    <p>None available</p>
+    {% if unapproved_confirmations %}
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Member</th>
+                <th>Amount</th>
+                <th>Action</th>
+            </tr>
+
+            {% for conf in unapproved_confirmations %}
+                <tr>
+                    <td>{{ conf.date_requested }}</td>
+                    <td>{{ conf.contribution.member.get_full_name }}</td>
+                    <td>{{ conf.contribution.amount }}</td>
+                    <td><a href="{% url "request_detail" conf.id %}">Check</a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>None available</p>
+    {% endif %}
 {% endblock %}
