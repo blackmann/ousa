@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT adeton.wsgi:application
+web: waitress-serve --port=$PORT old_students_web.wsgi:application
