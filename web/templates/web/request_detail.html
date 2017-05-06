@@ -1,0 +1,19 @@
+{% extends "web/base.html" %}
+
+{% block subtitle %}Confirm Request{% endblock %}
+
+{% block content %}
+    <p>Payment coming from <strong>{{ conf_req.contribution.member.get_full_name }}</strong></p>
+    <p>Amount is <strong>GH&cent; {{ conf_req.contribution.amount }}</strong></p>
+    {% if conf_req.merchant %}
+        <p><strong>Merchant:</strong> {{ conf_req.merchant }}</p>
+    {% endif %}
+    {% if conf_req.reference %}
+        <p><strong>Reference ID:</strong> {{ conf_req.reference }}</p>
+    {% endif %}
+    <form method="post">
+        <input type="hidden" name="confirm" value="1"/>
+        {% csrf_token %}
+        <input type="submit" class="button" value="Confirm"/>
+    </form>
+{% endblock %}

@@ -5,6 +5,7 @@ from django.contrib.auth import logout as logout_session
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.utils import timezone
 
 from web.models import ConfirmationRequest, Contribution, Admin
 
@@ -117,9 +118,33 @@ def logout(request):
     return redirect(urls.reverse(login))
 
 
+@login_required(login_url="/login/")
 def delete_request(request, pk):
-    pass
+    confirmation_request = ConfirmationRequest.objects.get(pk=pk)
+    if request.method == "POST":
+        if int(request.POST["delete"]) == 1:
+            confirmation_request.contribution.delete()
+            confirmation_request.delete()
+        return redirect(urls.reverse(member))
+    context = {"confirmation_request": confirmation_request}
+    return render(request, "web/delete_request.html", context=context)
 
 
+@login_required(login_url="/login/")
 def request_detail(request, pk):
-    pass
+    if not is_admin(request.user):
+        return redirect(urls.reverse(admin))
+    confirmation_request = ConfirmationRequest.objects.get(pk=pk)
+    if request.method == "POST":
+        confirm = request.POST["confirm"]
+        if int(confirm) == 1:
+            confirmation_request.approved = True
+            confirmation_request.save()
+
+            contribution = confirmation_request.contribution
+            contribution.approved = True
+            contribution.date_approved = timezone.now()
+            contribution.save()
+        return redirect(urls.reverse(confirmations))
+    context = {"conf_req": confirmation_request}
+    return render(request, "web/request_detail.html", context=context)

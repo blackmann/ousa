@@ -14,7 +14,7 @@ class Contribution(models.Model):
 
 
 class ConfirmationRequest(models.Model):
-    contribution = models.ForeignKey(Contribution)
+    contribution = models.OneToOneField(Contribution)
     approved = models.BooleanField(default=False)
     date_requested = models.DateTimeField(auto_now_add=True)
     merchant = models.CharField(blank=True, max_length=255)

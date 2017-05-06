@@ -1,0 +1,13 @@
+{% extends "web/base.html" %}
+{% block subtitle %}Delete Request{% endblock %}
+{% block panel_name %}Confirm deleting this request{% endblock %}
+
+{% block content %}
+    <p>Are you sure you to cancel making this payment request of
+        <strong>GH&cent; {{ confirmation_request.contribution.amount }}</strong>?</p>
+    <form method="post">
+        <input type="hidden" value="1" name="delete"/>
+        {% csrf_token %}
+        <input type="submit" value="Yes, Delete"/>
+    </form>
+{% endblock %}
