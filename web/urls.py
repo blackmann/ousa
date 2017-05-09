@@ -12,4 +12,5 @@ urlpatterns = [
     url(r"logout", views.logout, name="logout"),
     url(r"delete_request/(\d+)", views.delete_request, name="delete_request"),
     url(r"request_detail/(\d+)", views.request_detail, name="request_detail"),
+    url(r"^$", views.member, name="index"),
 ]
